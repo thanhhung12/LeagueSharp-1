@@ -15,6 +15,7 @@ namespace SayLag
         private static float tickLastDeath;
         private static bool lagSaid;
         private static Menu Menu;
+        private static bool incomplete;
         static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += GameLoad;
@@ -26,6 +27,7 @@ namespace SayLag
 
             lagSaid = true;
             DeathCount = Player.Deaths;
+            incomplete = false;
 
             //Initialize Menu
 
@@ -41,8 +43,42 @@ namespace SayLag
             Game.PrintChat("<font color = \"#D6B600\">Say Lag by ItsNotMeDos</font>"); // D6B600
         }
 
+        static void CustomSayAll(string WhatToSay)
+        {
+            if (Menu.Item("allChat").GetValue<bool>()) // all chat or no all chat
+            {
+                Game.Say("/all " + WhatToSay);
+            }
+            else
+            {
+                Game.Say(WhatToSay);
+            }
+        }
+
+        static string AddGs(string WhatToSay)
+        {
+            Random Random = new Random();
+            int randomNumber = Random.Next(4);
+            for (int i = 0; i != randomNumber; i++)
+            {
+                int randomNumber3 = Random.Next(2);
+                if (randomNumber3 == 0)
+                {
+                    WhatToSay = WhatToSay + "g";
+                }
+                else
+                {
+                    WhatToSay = WhatToSay + "G";
+                }
+            }
+            return WhatToSay;
+
+        }
+
         static void GameUpdateCheck(EventArgs args)
         {
+
+            string WhatToSay;
 
             if (Player.IsDead)
             {
@@ -55,21 +91,31 @@ namespace SayLag
                 }
             }
 
-            if ((tickLastDeath + 1f) <= Game.Time && lagSaid == false)
+            if (incomplete == true && (tickLastDeath + 3.5f) <= Game.Time)
+            {
+                WhatToSay = "lag ";
+                incomplete = false;
+                if (Menu.Item("randomG").GetValue<bool>()) // write gg
+                {
+                    WhatToSay = AddGs(WhatToSay);
+                }
+                 CustomSayAll(WhatToSay);
+            }
+
+            if ((tickLastDeath + 1.5f) <= Game.Time && lagSaid == false && incomplete == false)
             {
                 lagSaid = true;
                 Random Random = new Random();
                 int randomNumber;
                 if (Menu.Item("alwaysLag").GetValue<bool>())
                 {
-                    randomNumber = Random.Next(6);
+                    randomNumber = Random.Next(7);
                 }
                 else
                 {
-                    randomNumber = Random.Next(12);
+                    randomNumber = Random.Next(14);
                 }
-
-                string WhatToSay;
+                
 
                 if (randomNumber == 0)
                 {
@@ -95,44 +141,30 @@ namespace SayLag
                 {
                     WhatToSay = "god dis lags!!!!11";
                 }
+                else if (randomNumber == 6)
+                {
+                    WhatToSay = "la";
+                    incomplete = true;
+                }
                 else
                 {
                     WhatToSay = "";
                 }
 
-                if (WhatToSay != "" && Menu.Item("randomG").GetValue<bool>())
+                if (WhatToSay != "" && Menu.Item("randomG").GetValue<bool>() && incomplete == false) // write gg
                 {
                     int randomNumber2 = Random.Next(4);
                     WhatToSay = WhatToSay + " ";
-                    for (int i = 0; i != randomNumber2; i++)
-                    {
-                        int randomNumber3 = Random.Next(2);
-                        if (randomNumber3 == 0)
-                        {
-                            WhatToSay = WhatToSay + "g";
-                        }
-                        else
-                        {
-                            WhatToSay = WhatToSay + "G";
-                        }
-                    }
+                    WhatToSay = AddGs(WhatToSay);
                 }
 
-                if (randomNumber < 6)
-                {
-                    if (Menu.Item("allChat").GetValue<bool>())
-                    {
-                        Game.Say("/all " + WhatToSay);
-                    }
-                    else
-                    {
-                        Game.Say(WhatToSay);
-                    }
-                }
-                else
-                {
+                
 
+                if (randomNumber < 7)
+                {
+                    CustomSayAll(WhatToSay);
                 }
+
             }
 
         }
