@@ -61,11 +61,11 @@ namespace SayLag
                 int randomNumber;
                 if (Menu.Item("alwaysLag").GetValue<bool>())
                 {
-                    randomNumber = Random.Next(4);
+                    randomNumber = Random.Next(6);
                 }
                 else
                 {
-                    randomNumber = Random.Next(8);
+                    randomNumber = Random.Next(12);
                 }
 
                 string WhatToSay;
@@ -86,12 +86,20 @@ namespace SayLag
                 {
                     WhatToSay = "this lag";
                 }
+                else if (randomNumber == 4)
+                {
+                    WhatToSay = "-.- lag";
+                }
+                else if (randomNumber == 5)
+                {
+                    WhatToSay = "god dis lags!!!!11";
+                }
                 else
                 {
                     WhatToSay = "";
                 }
 
-                if (randomNumber < 4)
+                if (randomNumber < 6)
                 {
                     if (Menu.Item("allChat").GetValue<bool>())
                     {
