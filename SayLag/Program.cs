@@ -32,6 +32,7 @@ namespace SayLag
             Menu = new Menu("SayLag", "SayLag", true);
             Menu.AddItem(new MenuItem("alwaysLag", "Always Lag").SetValue(true));
             Menu.AddItem(new MenuItem("allChat", "In All chat").SetValue(false));
+            Menu.AddItem(new MenuItem("randomG", "Add random Number of gs").SetValue(false));
             Menu.AddToMainMenu();
 
             LeagueSharp.Game.OnGameUpdate += GameUpdateCheck;
@@ -97,6 +98,24 @@ namespace SayLag
                 else
                 {
                     WhatToSay = "";
+                }
+
+                if (WhatToSay != "" && Menu.Item("randomG").GetValue<bool>())
+                {
+                    int randomNumber2 = Random.Next(4);
+                    WhatToSay = WhatToSay + " ";
+                    for (int i = 0; i != randomNumber2; i++)
+                    {
+                        int randomNumber3 = Random.Next(2);
+                        if (randomNumber3 == 0)
+                        {
+                            WhatToSay = WhatToSay + "g";
+                        }
+                        else
+                        {
+                            WhatToSay = WhatToSay + "G";
+                        }
+                    }
                 }
 
                 if (randomNumber < 6)
