@@ -14,7 +14,6 @@ namespace SayLag
         private static int DeathCount;
         private static float tickLastDeath;
         private static bool lagSaid;
-        private static int lastSaid;
         private static Menu Menu;
         static void Main(string[] args)
         {
@@ -24,7 +23,6 @@ namespace SayLag
         static void GameLoad(EventArgs args)
         {
             Player = ObjectManager.Player;
-            Game.PrintChat("<font color = \"#D6B600\">Say Lag by ItsNotMeDos</font>"); // D6B600
 
             lagSaid = true;
             DeathCount = Player.Deaths;
@@ -37,6 +35,9 @@ namespace SayLag
             Menu.AddToMainMenu();
 
             LeagueSharp.Game.OnGameUpdate += GameUpdateCheck;
+
+
+            Game.PrintChat("<font color = \"#D6B600\">Say Lag by ItsNotMeDos</font>"); // D6B600
         }
 
         static void GameUpdateCheck(EventArgs args)
