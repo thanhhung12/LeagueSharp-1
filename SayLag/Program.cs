@@ -33,7 +33,7 @@ namespace SayLag
             menu.AddItem(new MenuItem("randomG", "Add random Number of gs").SetValue(false));
             menu.AddToMainMenu();
 
-            Game.OnGameUpdate += GameUpdateCheck;
+            Game.OnUpdate += GameUpdateCheck;
 
 
             Game.PrintChat("<font color = \"#D6B600\">Say Lag by ItsNotMeDos</font>"); // D6B600
